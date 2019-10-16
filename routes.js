@@ -7,12 +7,9 @@ let requests = 0
 
 //Check if id´s project exists
 function checkIdExists(req, res, next){
-  projects.forEach(project => {
-    if(project.id === req.params.id){
-      return next()
-    }
-  });
-  return res.json({message : 'Project not found'})
+  const project = projects.find(project => project.id == req.params.id);
+  if (!project) return res.status(400).json({ error: 'Project not found' });
+  return next();
 }
 
 //Get all requests made
